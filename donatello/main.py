@@ -1,5 +1,5 @@
 import os
-os.environ["OPENAI_API_KEY"] ="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"
+os.environ["OPENAI_API_KEY"] ="sk---XLAZ7MP4oIrQQJtDTzLyT3BlbkFJB9Wgr30is9riq5GyPEgx"
 
 from langchain.llms import OpenAI
 from langchain.chains import ConversationChain
@@ -8,7 +8,7 @@ from langchain.prompts.prompt import PromptTemplate
 
 from typing import Optional
 from fastapi import FastAPI
-#uvicorn main:app --reload
+#start cmd: uvicorn main:app --reload
 #http://127.0.0.1:8000/docs
 
 from pydantic import BaseModel
@@ -47,3 +47,10 @@ def process_object(obj: MyObject):
  }
 }
 '''
+
+@app.post("/create")
+def process_object(obj: MyObject):
+    question = obj.data.get('question')
+    message = obj.data.get('message')
+    output =  conversation.predict(input=question+message)
+    return {"response": output}

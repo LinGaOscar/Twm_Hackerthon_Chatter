@@ -1,5 +1,5 @@
 import os
-os.environ["OPENAI_API_KEY"] ="sk---wSJHhidTmqOgquRSXVRdT3BlbkFJjIJZtoxi624ebXJEW6Mw"
+os.environ["OPENAI_API_KEY"] ="sk---XLAZ7MP4oIrQQJtDTzLyT3BlbkFJB9Wgr30is9riq5GyPEgx"
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
@@ -24,7 +24,7 @@ embeddings = OpenAIEmbeddings()
 docsearch = Chroma.from_documents(split_docs, embeddings)
 
 # 创建问答对象
-qa = VectorDBQA.from_chain_type(llm=OpenAI(batch_size=5), chain_type="map_rerank", vectorstore=docsearch,return_source_documents=True)
+qa = VectorDBQA.from_chain_type(llm=OpenAI(), chain_type="refine", vectorstore=docsearch,return_source_documents=True)
 # 进行问答
 #result = qa({"query": "誰是石內卜"})
 result = qa({"query": "誰是普丁"})
