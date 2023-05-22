@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatterBuddy</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/the-header.css}" href="../static/css/the-header.css"/>
+    <link rel="stylesheet" th:href="@{/css/default.css}" href="../static/css/default.css"/>
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}" src="../static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"
+            src="../static/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/vue-2.6.14.js}" src="../static/js/vue-2.6.14.js"></script>
+</head>
+<body>
+<!-- 匯入 Header -->
+<div th:replace="header :: header"></div>
+
+<div class="container content-container" id="app">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="card-body">
+                    <!-- 登入表單 -->
+                    <form @submit.prevent="submitButton">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" v-model="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{ submitTitle }}</button>
+                        <button type="button" @click="switchMode" class="btn btn-info">{{ switchCaption }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            email: '',
+            password: '',
+            mode: 'login',
+        },
+        computed: {
+            title() {
+                if (this.mode == 'login') {
+                    return '使用者登入';
+                } else {
+                    return '使用者註冊';
+                }
+            },
+            submitTitle() {
+                if (this.mode == 'login') {
+                    return '登入';
+                } else {
+                    return '註冊';
+                }
+            },
+            switchCaption() {
+                if (this.mode == 'login') {
+                    return '使用註冊';
+                } else {
+                    return '使用登入';
+                }
+            }
+        },
+        methods: {
+            submitButton() {
+                const payload = {
+                    email: this.email,
+                    password: this.password
+                }
+                if (this.mode == 'login') {
+                    $.ajax({
+                        url: '/login',
+                        type: 'POST',
+                        data: JSON.stringify(payload),
+                        contentType: 'application/json',
+                        success: function (response) {
+                        },
+                        error: function (xhr, status, error) {
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: '/signup',
+                        type: 'POST',
+                        data: JSON.stringify(payload),
+                        contentType: 'application/json',
+                        success: function (response) {
+                        },
+                        error: function (xhr, status, error) {
+                        }
+                    });
+                }
+            },
+            switchMode() {
+                if (this.mode == 'login') {
+                    this.mode = 'sign';
+                } else {
+                    this.mode = 'login';
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

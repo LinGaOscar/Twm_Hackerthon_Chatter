@@ -9,11 +9,7 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     @GetMapping("/")
-    public String indexPage(HttpSession httpSession) {
-//        if (Objects.isNull(httpSession.getAttribute("loginCheck"))) {
-//            return "/login";
-//        }
-
+    public String indexPage() {
         return "index";
     }
 }

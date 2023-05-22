@@ -1,3 +1,5 @@
 firebase:
   databaseUrl: https://twm-hackerthon-chatter-default-rtdb.asia-southeast1.firebasedatabase.app/
-  credentialsPath: src\main\resources\credentials\twm-hackerthon-chatter-firebase-adminsdk-163ko-4355be3f2d.json
+  authKry: AIzaSyAWeg9c1iM5Tp5jmztAWLrf1XvQv5W42Rc
+  loginUrl: https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
+  signupUrl: https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=
