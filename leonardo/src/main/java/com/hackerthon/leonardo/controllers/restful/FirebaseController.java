@@ -30,18 +30,25 @@ public class FirebaseController {
     }
 
     @PostMapping("/write")
-    public Map<String, Object> writeToCustomer(@RequestBody CustomerData customer) throws JsonProcessingException {
+    public Map<String, Object> creatToFirebase(@RequestBody CustomerData customer) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        resultMap.put("result", firebaseService.writeToFirebase("customer", customer.toMap()));
+        resultMap.put("result", firebaseService.creatToFirebase("customer", customer.toMap()));
         return resultMap;
     }
 
     @PostMapping("/read")
-    public Map<String, Object> readFromCustomer() throws ExecutionException, InterruptedException, JsonProcessingException {
+    public Map<String, Object> readFromCustomer() {
         Map<String, Object> resultMap = new HashMap<>();
 
         resultMap.put("result", firebaseService.readAllFromFirebase("customer"));
+        return resultMap;
+    }
+
+    @PostMapping("/update")
+    public Map<String, Object> updateToFireBase(@RequestBody Map<String, Object> data) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", firebaseService.updateToFireBase("customer", data));
         return resultMap;
     }
 }

@@ -23,7 +23,7 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Map<String, Object> writeToFirebase(String column, Map<String, Object> data) throws JsonProcessingException {
+    public Map<String, Object> creatToFirebase(String column, Map<String, Object> data) {
         String url = databaseUrl + column + ".json";
 
         HttpHeaders headers = new HttpHeaders();
@@ -35,7 +35,7 @@ public class FirebaseServiceImpl implements FirebaseService {
         });
         Map<String, Object> responseBody = response.getBody();
         String customerId = (String) responseBody.get("name");
-        return readFromFirebase(column, customerId);
+        return this.readFromFirebase(column, customerId);
     }
 
     @Override
@@ -54,9 +54,23 @@ public class FirebaseServiceImpl implements FirebaseService {
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {
         });
         Map<String, Object> responseBody = response.getBody();
+        responseBody.put("id", id);
+        return responseBody;
+    }
 
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put(id, responseBody);
-        return resultMap;
+    @Override
+    public Map<String, Object> updateToFireBase(String column, Map<String, Object> data) {
+        String id = (String) data.get("id");
+        String url = databaseUrl + column + "/" + id + ".json";
+
+        data.remove(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(data, headers);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
+        });
+        Map<String, Object> responseBody = response.getBody();
+        responseBody.put("id", id);
+        return responseBody;
     }
 }

@@ -6,10 +6,12 @@ import java.util.Map;
 
 public interface FirebaseService {
 
-    Map<String, Object> writeToFirebase(String column, Map<String, Object> data) throws JsonProcessingException;
+    Map<String, Object> creatToFirebase(String column, Map<String, Object> data);
 
-    Map<String, Object> readAllFromFirebase(String column) throws JsonProcessingException;
+    Map<String, Object> readAllFromFirebase(String column);
 
-    Map<String, Object> readFromFirebase(String column, String id) throws JsonProcessingException;
+    Map<String, Object> readFromFirebase(String column, String id);
+
+    Map<String, Object> updateToFireBase(String column, Map<String, Object> data);
 
 }
