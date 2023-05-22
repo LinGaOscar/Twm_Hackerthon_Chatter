@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -24,22 +26,31 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage(HttpSession httpSession) {
         if (httpSession.getAttribute("userToken") != null) {
-            return "redirect:/index";
+            return "redirect:/";
         }
         return "/login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginModel loginModel, HttpSession httpSession) {
-        System.out.println("login");
-        System.out.println(authService.login(loginModel));
-        return "/login";
+    @ResponseBody
+    public Map<String, Object> login(@RequestBody LoginModel loginModel, HttpSession httpSession) {
+        Map<String, Object> resultMap = authService.login(loginModel);
+        httpSession.setAttribute("userToken", resultMap.get("idToken"));
+        return resultMap;
     }
 
     @PostMapping("/signup")
-    public String resist(@RequestBody LoginModel loginModel, HttpSession httpSession) {
-        System.out.println("resist");
-        System.out.println(authService.signup(loginModel));
-        return "/login";
+    @ResponseBody
+    public Map<String, Object> resist(@RequestBody LoginModel loginModel, HttpSession httpSession) {
+        Map<String, Object> resultMap = authService.signup(loginModel);
+        httpSession.setAttribute("userToken", resultMap.get("idToken"));
+
+        return resultMap;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.removeAttribute("userToken");
+        return "redirect:/";
     }
 }

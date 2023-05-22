@@ -37,18 +37,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Map<String, Object> login(LoginModel loginModel) {
         String url = loginUrl + authKry;
-
         updatePayMap(loginModel.getEmail(), loginModel.getPassword());
-
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(payMap, headers);
 
-        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
-        });
-        if (response.getStatusCode() == HttpStatus.OK) {
+        try {
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
+            });
             return response.getBody();
-        } else {
-            // 返回錯誤訊息或拋出異常
-            return null;
+        } catch (Exception err) {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("err", err.getMessage());
+            return resultMap;
         }
     }
 
@@ -56,16 +55,16 @@ public class AuthServiceImpl implements AuthService {
     public Map<String, Object> signup(LoginModel loginModel) {
         String url = signupUrl + authKry;
         updatePayMap(loginModel.getEmail(), loginModel.getPassword());
-
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(payMap, headers);
 
-        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
-        });
-        if (response.getStatusCode() == HttpStatus.OK) {
+        try {
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
+            });
             return response.getBody();
-        } else {
-            // 返回錯誤訊息或拋出異常
-            return null;
+        } catch (Exception err) {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("err", err.getMessage());
+            return resultMap;
         }
     }
 
