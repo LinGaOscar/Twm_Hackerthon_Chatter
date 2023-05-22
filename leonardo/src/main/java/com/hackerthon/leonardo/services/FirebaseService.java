@@ -1,10 +1,15 @@
 package com.hackerthon.leonardo.services;
 
-import com.google.cloud.firestore.Firestore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.Map;
 
 public interface FirebaseService {
-    void writeToFirebase(Map<String, Object> data);
-    Firestore readFromFirebase();
+
+    Map<String, Object> writeToFirebase(String column, Map<String, Object> data) throws JsonProcessingException;
+
+    Map<String, Object> readAllFromFirebase(String column) throws JsonProcessingException;
+
+    Map<String, Object> readFromFirebase(String column, String id) throws JsonProcessingException;
+
 }

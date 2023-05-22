@@ -1,60 +1,62 @@
 package com.hackerthon.leonardo.services;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
-import com.google.firebase.database.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class FirebaseServiceImpl implements FirebaseService {
 
-    private DatabaseReference databaseReference;
-
     @Value("${firebase.databaseUrl}")
     private String databaseUrl;
 
-    @Value("${firebase.credentialsPath}")
-    private String credentialsPath;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
-    @PostConstruct
-    private void initializeFirebase() {
-        try {
-            FileInputStream serviceAccount = new FileInputStream(credentialsPath);
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl(databaseUrl)
-                    .build();
-
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-            }
-            databaseReference = FirebaseDatabase.getInstance().getReference();
-            System.out.println("Database reference: " + databaseReference);
-        } catch (IOException e) {
-            // 处理初始化错误
-        }
+    public FirebaseServiceImpl() {
+        this.restTemplate = new RestTemplate();
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override
-    public void writeToFirebase(Map<String, Object> data) {
-        System.out.println(data);
+    public Map<String, Object> writeToFirebase(String column, Map<String, Object> data) throws JsonProcessingException {
+        String url = databaseUrl + column + ".json";
 
-        DatabaseReference dataRef = databaseReference.child("yourNode");
-        dataRef.setValueAsync(data);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(data, headers);
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> responseBody = response.getBody();
+        String customerId = (String) responseBody.get("name");
+        return readFromFirebase(column, customerId);
     }
 
     @Override
-    public Firestore readFromFirebase() {
-     return FirestoreClient.getFirestore();
+    public Map<String, Object> readAllFromFirebase(String column) throws JsonProcessingException {
+        String url = databaseUrl + column + ".json";
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
+        return response.getBody();
+    }
+
+    @Override
+    public Map<String, Object> readFromFirebase(String column, String id) throws JsonProcessingException {
+        String url = databaseUrl + column + "/" + id + ".json";
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
+        Map<String, Object> responseBody = response.getBody();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put(id, responseBody);
+        return resultMap;
     }
 }
