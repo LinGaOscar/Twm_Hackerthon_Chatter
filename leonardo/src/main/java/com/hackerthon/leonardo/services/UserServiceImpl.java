@@ -16,8 +16,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> addUser(String email) {
-
-
         Map<String, Object> tempMap = new HashMap<>();
         tempMap.put("email", email);
         return firebaseService.creatToFirebase("user", tempMap);
