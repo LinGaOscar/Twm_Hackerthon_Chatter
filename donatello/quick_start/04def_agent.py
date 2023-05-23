@@ -52,8 +52,8 @@ tools = [
     )
 ]
 
-# 初始化 agent
-agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+# 初始化 agent max_iterations是最多思考次數
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,max_iterations=5)
 # agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
 # agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION
 
