@@ -26,7 +26,7 @@ def read_root():
 
 @app.get("/text")
 def read_text(q: str):
-    output =  conversation.predict(input=q)
+    output = conversation.predict(input=q)
     return {"response": output}
 
 
@@ -40,18 +40,3 @@ def process_object(obj: MyObject):
     output = conversation.predict(input=question+message)
     return {"response": output}
 
-'''
-{
- "data": {
-    "question":"這是一段對話情境，請代替MAX回應Cindy /n",
-    "message": "Max : 你呢? 平時有喜歡的做的事情嗎? /n Cindy: 平時就下班 偶爾運個小動 回家看一下書然後放空睡覺 /n Cindy: 周未跟朋友約去咖啡廳或是到處走走 /n Cindy:阿我喜歡吃東西 /n Cindy:我也喜歡看電影 就一些很平常的事情耶其實 /n Max: 我也是啦 不用那麼拘束"
- }
-}
-'''
-
-@app.post("/create")
-def process_object(obj: MyObject):
-    question = obj.data.get('question')
-    message = obj.data.get('message')
-    output = conversation.predict(input=question+message)
-    return {"response": output}
