@@ -1,9 +1,11 @@
 package com.hackerthon.leonardo.services;
 
+import com.hackerthon.leonardo.model.LoginModel;
+
 import java.util.Map;
 
 public interface UserService {
-    Map<String, Object> addUser(String email);
+    Map<String, Object> addUser(String id, LoginModel loginModel);
 
     Map<String, Object> readUserWithEmail(String email);
 

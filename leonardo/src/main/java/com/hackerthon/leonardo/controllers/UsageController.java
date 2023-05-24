@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 public class UsageController {
     @GetMapping("/usage")
     public String loginPage(HttpSession httpSession) {
-        if (httpSession.getAttribute("userToken") != null) {
+        if (httpSession.getAttribute("idToken") != null) {
             return "redirect:/";
         }
         return "/usage";

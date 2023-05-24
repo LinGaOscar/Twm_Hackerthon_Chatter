@@ -32,8 +32,8 @@ public class FirebaseServiceImpl implements FirebaseService {
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
         });
         Map<String, Object> responseBody = response.getBody();
-        String customerId = (String) responseBody.get("name");
-        return this.readFromFirebase(column, customerId);
+        String customerFireKey = (String) responseBody.get("name");
+        return this.readFromFirebase(column, customerFireKey);
     }
 
     @Override
@@ -46,29 +46,29 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Map<String, Object> readFromFirebase(String column, String id) {
-        String url = databaseUrl + column + "/" + id + ".json";
+    public Map<String, Object> readFromFirebase(String column, String customerFireKey) {
+        String url = databaseUrl + column + "/" + customerFireKey + ".json";
 
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {
         });
         Map<String, Object> responseBody = response.getBody();
-        responseBody.put("id", id);
+        responseBody.put("key", customerFireKey);
         return responseBody;
     }
 
     @Override
     public Map<String, Object> updateToFireBase(String column, Map<String, Object> data) {
-        String id = (String) data.get("id");
-        String url = databaseUrl + column + "/" + id + ".json";
+        String customerFireKey = (String) data.get("key");
+        String url = databaseUrl + column + "/" + customerFireKey + ".json";
 
-        data.remove(id);
+        data.remove("key");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(data, headers);
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
         });
         Map<String, Object> responseBody = response.getBody();
-        responseBody.put("id", id);
+        responseBody.put("key", customerFireKey);
         return responseBody;
     }
 }

@@ -2,6 +2,7 @@ package com.hackerthon.leonardo.controllers;
 
 import com.hackerthon.leonardo.model.LoginModel;
 import com.hackerthon.leonardo.services.AuthService;
+import com.hackerthon.leonardo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +17,18 @@ import java.util.Map;
 public class LoginController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     @Autowired
-    public LoginController(AuthService authService) {
+    public LoginController(AuthService authService, UserService userService) {
         this.authService = authService;
+        this.userService = userService;
     }
 
 
     @GetMapping("/login")
     public String loginPage(HttpSession httpSession) {
-        if (httpSession.getAttribute("userToken") != null) {
+        if (httpSession.getAttribute("idToken") != null) {
             return "redirect:/";
         }
         return "/login";
@@ -35,22 +38,37 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> login(@RequestBody LoginModel loginModel, HttpSession httpSession) {
         Map<String, Object> resultMap = authService.login(loginModel);
-        httpSession.setAttribute("userToken", resultMap.get("idToken"));
+        if (resultMap.get("idToken") != null) {
+            Map<String, Object> userData = userService.readUserWithEmail(loginModel.getEmail());
+            httpSession.setAttribute("idToken", resultMap.get("idToken"));
+            httpSession.setAttribute("localId", (String) resultMap.get("localId"));
+            httpSession.setAttribute("key", userData.get("key"));
+        }
+
         return resultMap;
     }
 
     @PostMapping("/signup")
     @ResponseBody
-    public Map<String, Object> resist(@RequestBody LoginModel loginModel, HttpSession httpSession) {
+    public Map<String, Object> register(@RequestBody LoginModel loginModel, HttpSession httpSession) {
         Map<String, Object> resultMap = authService.signup(loginModel);
-        httpSession.setAttribute("userToken", resultMap.get("idToken"));
+        if (resultMap.get("idToken") != null) {
+            String UID = (String) resultMap.get("localId");
+            System.out.println(UID);
+            Map<String, Object> userData = userService.addUser(UID, loginModel);
 
+            httpSession.setAttribute("idToken", resultMap.get("idToken"));
+            httpSession.setAttribute("localId", UID);
+            httpSession.setAttribute("key", userData.get("key"));
+        }
         return resultMap;
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
-        httpSession.removeAttribute("userToken");
+        httpSession.removeAttribute("idToken");
+        httpSession.removeAttribute("localId");
+        httpSession.removeAttribute("key");
         return "redirect:/";
     }
 }
