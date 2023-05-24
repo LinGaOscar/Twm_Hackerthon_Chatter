@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class UsageController {
@@ -19,9 +20,9 @@ public class UsageController {
 
     @PostMapping("/usage")
     @ResponseBody
-    public String getUsage(HttpSession httpSession) {
+    public Map<String, Object> getUsage(HttpSession httpSession) {
         String key = (String) httpSession.getAttribute("localId");
 
-        return "redirect:/";
+        return null;
     }
 }
