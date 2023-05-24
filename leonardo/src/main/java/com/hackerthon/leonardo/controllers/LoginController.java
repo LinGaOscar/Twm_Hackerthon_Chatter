@@ -30,8 +30,9 @@ public class LoginController {
     public String loginPage(HttpSession httpSession) {
         if (httpSession.getAttribute("idToken") != null) {
             return "redirect:/";
+        }else{
+            return "login";
         }
-        return "/login";
     }
 
     @PostMapping("/login")
@@ -44,7 +45,6 @@ public class LoginController {
             httpSession.setAttribute("localId", (String) resultMap.get("localId"));
             httpSession.setAttribute("key", userData.get("key"));
         }
-
         return resultMap;
     }
 

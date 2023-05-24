@@ -10,8 +10,9 @@ public class SettingController {
     @GetMapping("/setting")
     public String loginPage(HttpSession httpSession) {
         if (httpSession.getAttribute("idToken") != null) {
-            return "redirect:/";
+            return "setting";
+        }else{
+            return "index";
         }
-        return "/setting";
     }
 }
