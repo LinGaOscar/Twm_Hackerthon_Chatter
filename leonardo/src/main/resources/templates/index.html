@@ -24,9 +24,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
+                    <h1>UID:</h1>
+                </div>
+                <div class="card-body">
+                    <p th:text="${session.localId}"></p>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
                     <h1>{{ title }}</h1>
                 </div>
                 <div class="card-body">
+
                     <div v-for="(paragraph, index) in paragraphs" :key="index">
                         <p>{{ paragraph }}</p>
                     </div>
@@ -37,7 +47,7 @@
 </div>
 
 <script>
-    const app= new Vue({
+    const app = new Vue({
         el: '#app',
         data: {
             title: 'Chatter Buddy Management',
