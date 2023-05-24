@@ -1,4 +1,5 @@
 import os
+
 os.environ["OPENAI_API_KEY"] = "sk--XLAZ7MP4oIrQQJtDTzLyT3BlbkFJB9Wgr30is9riq5GyPEgx"
 
 from langchain.llms import OpenAI
@@ -10,18 +11,11 @@ from langchain.chains import LLMChain
 from langchain.chains import SimpleSequentialChain
 from langchain.chains import SequentialChain
 
-from typing import Optional
-from fastapi import FastAPI
-# start cmd: uvicorn main2:app --reload
-# http://127.0.0.1:8000/docs
-
-from pydantic import BaseModel
-
 # openAI
 llm = OpenAI(temperature=0.9, model_name="text-davinci-003")
 conversation = ConversationChain(llm=llm, verbose=True, memory=ConversationBufferMemory())
 
-#make_introduce
+# make_introduce
 trams_prompt = PromptTemplate(
     input_variables=["value"],
     template=
@@ -30,7 +24,7 @@ trams_prompt = PromptTemplate(
     '''{value}'''
     """,
 )
-trams_chain = LLMChain(llm=llm, prompt=trams_prompt,verbose=True)
+trams_chain = LLMChain(llm=llm, prompt=trams_prompt, verbose=True)
 
 prompt1 = PromptTemplate(
     input_variables=["value"],
@@ -41,7 +35,7 @@ prompt1 = PromptTemplate(
     '''{value}'''
     """,
 )
-chain1 = LLMChain(llm=llm, prompt=prompt1,verbose=True)
+chain1 = LLMChain(llm=llm, prompt=prompt1, verbose=True)
 
 prompt2 = PromptTemplate(
     input_variables=["value"],
@@ -53,7 +47,7 @@ prompt2 = PromptTemplate(
     '''{value}'''
     """,
 )
-chain2 = LLMChain(llm=llm, prompt=prompt2,verbose=True)
+chain2 = LLMChain(llm=llm, prompt=prompt2, verbose=True)
 
 chinese_reply_prompt = PromptTemplate(
     input_variables=["value"],
@@ -63,14 +57,14 @@ chinese_reply_prompt = PromptTemplate(
     '''{value}'''
     """,
 )
-chinese_reply_chain = LLMChain(llm=llm, prompt=chinese_reply_prompt,verbose=True)
+chinese_reply_chain = LLMChain(llm=llm, prompt=chinese_reply_prompt, verbose=True)
 
-introduce_chain = SimpleSequentialChain(chains=[trams_chain,chain1,chain2,chinese_reply_chain], verbose=True)
+introduce_chain = SimpleSequentialChain(chains=[trams_chain, chain1, chain2, chinese_reply_chain], verbose=True)
 
-#conversation_hint
+# conversation_hint
 
 conversation_hint_prompt = PromptTemplate(
-    input_variables=["target","value"],
+    input_variables=["target", "value"],
     template=
     """
     Simulate {target}'s response in the following conversation.
@@ -79,15 +73,31 @@ conversation_hint_prompt = PromptTemplate(
     '''{value}'''
     """,
 )
-conversation_hint_chain = LLMChain(llm=llm, prompt=conversation_hint_prompt,verbose=True,output_key="result")
+conversation_hint_chain = LLMChain(llm=llm, prompt=conversation_hint_prompt, verbose=True, output_key="result")
 
 # fastapi
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+
+# start cmd: uvicorn main2:app --reload
+# http://127.0.0.1:8000/docs
+
 app = FastAPI()  # 建立一個 Fast API application
+# 設定跨域請求中間件
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],  # 允許的源網域
+    allow_credentials=True,
+    allow_methods=["*"],  # 允許的HTTP方法，這裡設為全部允許
+    allow_headers=["*"]  # 允許的HTTP標頭，這裡設為全部允許
+)
 
 
-@app.get("/HealthCheck")  # 指定 api 路徑 (get方法)
+@app.get("/health_heck")  # 指定 api 路徑 (get方法)
 def read_root():
-    return {"response": "online"}
+    return {"response": "langchain service online"}
 
 
 @app.get("/conversation")
@@ -102,22 +112,24 @@ class MyObject(BaseModel):
 
 @app.post("/make_introduce")
 def make_introduce(obj: MyObject):
-
     message = obj.data.get('message')
     output = introduce_chain.run(message)
     return {"response": output}
+
+
 '''
-Max,27歲,180公分,摩羯座,O型,男性,異性戀,個性活力充沛、開朗友善、積極向上,興趣戶外活動，爬山、露營、徒步旅行。喜歡小動物、狗、貓,自由職業者，工作攝影和網路營銷,相信只有在追求自己喜愛的事物的時候，才能真正享受生命的美好。
+"message":"Max,27歲,180公分,摩羯座,O型,男性,異性戀,個性活力充沛、開朗友善、積極向上,興趣戶外活動，爬山、露營、徒步旅行。喜歡小動物、狗、貓,自由職業者，工作攝影和網路營銷,相信只有在追求自己喜愛的事物的時候，才能真正享受生命的美好。"
 '''
+
 
 @app.post("/conversation_hint")
 def make_introduce(obj: MyObject):
-
     target = obj.data.get('target')
     message = obj.data.get('message')
 
-    output = conversation_hint_chain.run(target=target,value=message)
+    output = conversation_hint_chain.run(target=target, value=message)
     return {"response": output}
+
 
 '''
 "target":"max",

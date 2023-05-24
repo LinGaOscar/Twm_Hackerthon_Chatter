@@ -19,10 +19,9 @@ public class HealthCheckController {
     @GetMapping("/healthCheck")
     public Map<String, Object> healthCheck() {
         Map<String, Object> resultMap = new HashMap<>();
-        Map<String, Object> healthResultMap = new HashMap<>();
-        healthResultMap.put("sate", "online");
-        healthResultMap.put("databaseUrl", databaseUrl);
-        healthResultMap.put("logInUrl", loginUrl);
+        Map<String, Object> healthResultMap = new HashMap<String, Object>() {{
+            put("state", "backend online");
+        }};
         resultMap.put("result", healthResultMap);
         return resultMap;
     }

@@ -3,3 +3,6 @@ firebase:
   authKry: AIzaSyAWeg9c1iM5Tp5jmztAWLrf1XvQv5W42Rc
   loginUrl: https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
   signupUrl: https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=
+
+langchain:
+  serviceUrl: http://127.0.0.1:8000
