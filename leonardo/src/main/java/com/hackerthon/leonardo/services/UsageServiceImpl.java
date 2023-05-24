@@ -3,7 +3,10 @@ package com.hackerthon.leonardo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UsageServiceImpl implements UsageService {
@@ -26,7 +29,19 @@ public class UsageServiceImpl implements UsageService {
     public Map<String, Object> readUsage(String uid) {
         Map<String, Object> allUsage = readAllUsage();
 
-        return null;
+        String targetUID = uid;
+
+        List<Map<String, Object>> filteredData = allUsage.entrySet().stream()
+                .filter(entry -> {
+                    Map<String, Object> innerMap = (Map<String, Object>) entry.getValue();
+                    return innerMap.containsKey("UID") && innerMap.get("UID").equals(targetUID);
+                })
+                .map(entry -> (Map<String, Object>) entry.getValue())
+                .collect(Collectors.toList());
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("usage", filteredData);
+
+        return resultMap;
     }
 
     @Override

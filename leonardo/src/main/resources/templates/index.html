@@ -22,19 +22,14 @@
 <div class="container content-container" id="app">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h1>UID:</h1>
-                </div>
-                <div class="card-body">
-                    <p th:text="${session.localId}"></p>
-                </div>
-            </div>
-            <br>
+
             <div class="card">
                 <div class="card-header">
                     <h1>{{ title }}</h1>
+                    <p>UID:</p>
+                    <p th:text="${session.localId}"></p>
                 </div>
+                <br>
                 <div class="card-body">
 
                     <div v-for="(paragraph, index) in paragraphs" :key="index">

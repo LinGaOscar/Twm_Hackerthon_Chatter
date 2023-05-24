@@ -21,13 +21,35 @@
 
 <div class="container content-container" id="usage">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <h1>{{ title }}</h1>
+                    <p>UID:</p>
+                    <p th:text="${session.localId}"></p>
                 </div>
                 <div class="card-body">
-                    <p>{{uid}}</p>
+                    <p>目前總共呼叫API {{totalApiCall.times}}次</p>
+                    <p>目前總共呼叫makeIntroduceTimes API {{totalApiCall.makeIntroduceTimes}}次</p>
+                    <p>目前總共呼叫conversationHintTimesAPI {{totalApiCall.conversationHintTimes}}次</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>API name</th>
+                                <th>message</th>
+                                <th>response</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="usage in totalUsage">
+                                <td>{{usage.api}}</td>
+                                <td>{{usage.message}}</td>
+                                <td>{{usage.response}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,22 +60,42 @@
         el: '#usage',
         data: {
             title: 'Chatter Buddy Usage',
+            totalUsage: {}
         },
         mounted() {
+            const self = this;
             $.ajax({
                 url: '/usage',
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (response) {
-                    console.log(response);
-                    if(response.idToken){
-                        location.reload();
-                    }
+                    self.totalUsage = response.usage;
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
                 }
             });
+        },
+        computed: {
+            totalApiCall() {
+                let times = this.totalUsage.length;
+                let makeIntroduceTimes = 0;
+                let conversationHintTimes = 0;
+                if (this.totalUsage.length > 0) {
+                    this.totalUsage.forEach(item => {
+                        if (item.api == "makeIntroduce") {
+                            makeIntroduceTimes++;
+                        } else {
+                            conversationHintTimes++;
+                        }
+                    })
+                }
+                return {
+                    times: times,
+                    makeIntroduceTimes: makeIntroduceTimes,
+                    conversationHintTimes: conversationHintTimes
+                }
+            }
         }
     });
 </script>
