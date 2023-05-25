@@ -20,7 +20,8 @@ trams_prompt = PromptTemplate(
     input_variables=["value"],
     template=
     """
-    Please convert the text to English
+    Please translate the text into English.
+    Do not need to translate the names.
     '''{value}'''
     """,
 )
@@ -54,6 +55,7 @@ chinese_reply_prompt = PromptTemplate(
     template=
     """
     Please translate the text into Traditional Chinese.
+    Do not need to translate the names.
     '''{value}'''
     """,
 )
@@ -76,14 +78,20 @@ conversation_hint_chain = LLMChain(llm=llm, prompt=conversation_hint_prompt, ver
 
 # personal_guide
 personal_guide_prompt = PromptTemplate(
-    input_variables=["target_a", "target_b", "value"],
+    input_variables=["target_a", "target_b", "value_a", "value_b"],
     template=
-    """
-    Simulate {target}'s response in the following conversation.
-    Add some details to enhance the conversation.
-    Keep the answers concise.
-    '''{value}'''
-    """,
+"""
+'''{value_a}'''
+'''{value_b}'''
+Please provide {target_a} with a dating guide tailored to {target_b} based on their respective information, including their zodiac signs.
+Keep the answers concise.
+Offer one key point and two suggestions to {target_a}.
+Key point should start with "you should".
+Answer the question using the specified format, you can follow the example below:
+'''
+1:[key point] 2:[Answer to suggestions1] 3:[Answer to suggestions2]
+'''
+""",
 )
 personal_guide_chain = LLMChain(llm=llm, prompt=personal_guide_prompt, verbose=True, output_key="result")
 
@@ -124,6 +132,7 @@ class MyObject(BaseModel):
 
 @app.post("/make_introduce")
 def make_introduce(obj: MyObject):
+    print("make_introduce")
     message = obj.data.get('message')
     output = introduce_chain.run(message)
     return {"response": output}
@@ -135,7 +144,8 @@ def make_introduce(obj: MyObject):
 
 
 @app.post("/conversation_hint")
-def make_introduce(obj: MyObject):
+def conversation_hint(obj: MyObject):
+    print("conversation_hint")
     target = obj.data.get('target')
     message = obj.data.get('message')
 
@@ -151,9 +161,12 @@ def make_introduce(obj: MyObject):
 
 @app.post("/personal_guide")
 def personal_guide(obj: MyObject):
-    target_a = obj.data.get('target')
-    target_b = obj.data.get('target')
-    message = obj.data.get('message')
+    print("personal_guide")
+    target_a = obj.data.get('targetA')
+    target_b = obj.data.get('targetB')
+    message_a = obj.data.get('messageA')
+    message_b = obj.data.get('messageB')
 
-    output = conversation_hint_chain.run(target_a=target_a, target_b=target_b, value=message)
+    temp = personal_guide_chain.run(target_a=target_a, target_b=target_b, value_a=message_a,value_b=message_b)
+    output = chinese_reply_chain.run(temp)
     return {"response": output}

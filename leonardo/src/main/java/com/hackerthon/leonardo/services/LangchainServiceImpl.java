@@ -13,7 +13,7 @@ import java.util.Map;
 public class LangchainServiceImpl implements LangchainService {
 
     @Value("${langchain.serviceUrl}")
-    private String databaseUrl;
+    private String serviceUrl;
 
     private final RestTemplate restTemplate;
 
@@ -33,7 +33,7 @@ public class LangchainServiceImpl implements LangchainService {
 
     @Override
     public Map<String, Object> healthCheck() {
-        String url = databaseUrl + "/health_heck";
+        String url = serviceUrl + "/health_heck";
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {
         });
         return response.getBody();
@@ -41,21 +41,21 @@ public class LangchainServiceImpl implements LangchainService {
 
     @Override
     public Map<String, Object> makeIntroduce(Map<String, Object> data) {
-        String url = databaseUrl + "/make_introduce";
+        String url = serviceUrl + "/make_introduce";
         ResponseEntity<Map<String, Object>> response = sendRequest(url, data);
         return response.getBody();
     }
 
     @Override
     public Map<String, Object> conversationHint(Map<String, Object> data) {
-        String url = databaseUrl + "/conversation_hint";
+        String url = serviceUrl + "/conversation_hint";
         ResponseEntity<Map<String, Object>> response = sendRequest(url, data);
         return response.getBody();
     }
 
     @Override
     public Map<String, Object> personalGuide(Map<String, Object> data) {
-        String url = databaseUrl + "/personal_guide";
+        String url = serviceUrl + "/personal_guide";
         ResponseEntity<Map<String, Object>> response = sendRequest(url, data);
         return response.getBody();
     }
