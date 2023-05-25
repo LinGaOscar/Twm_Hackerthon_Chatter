@@ -51,12 +51,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, Object> readUserWithKey(String key) {
+        Map<String, Object> allUser = readAllUser();
+        for (Map.Entry<String, Object> entry : allUser.entrySet()) {
+            if (entry.getKey().equals(key)) {
+                Map<String, Object> userData = (Map<String, Object>) entry.getValue();
+                userData.put("key", entry.getKey());
+                return userData;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Map<String, Object> readAllUser() {
         return firebaseService.readAllFromFirebase("user");
     }
 
     @Override
-    public Map<String, Object> updateUser(Map<String, Object> data) {
-        return firebaseService.updateToFireBase("user", data);
+    public Map<String, Object> updateUser(String key, Map<String, Object> data) {
+        Map<String, Object> resultMap = data;
+        resultMap.put("key", key);
+        return firebaseService.updateToFireBase("user", resultMap);
     }
 }

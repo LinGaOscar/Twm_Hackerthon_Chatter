@@ -19,6 +19,97 @@
 <!-- 匯入 Header -->
 <div th:replace="header :: header"></div>
 
+<div class="container content-container" id="app">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1>個人資料</h1>
+                </div>
+                <div class="card-body">
+                    <form @submit.prevent="submitButton">
+                        <div class="form-group">
+                            <label for="id">id:</label>
+                            <input type="text" id="id" v-model="id" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">名稱:</label>
+                            <input type="text" id="name" v-model="name" class="form-control" maxlength="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="email" class="form-control" readonly>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" v-model="password" class="form-control" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{ submitTitle }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const app = new Vue({
+        el: '#app',
+        data: {
+            UID: '',
+            email: '',
+            name: '',
+            password: '',
+        },
+        mounted() {
+            var vm = this;
+            $.ajax({
+                url: '/setting/getData',
+                type: 'POST',
+                contentType: 'application/json',
+                    success: function (response) {
+                        vm.id = response.UID;
+                        vm.name = response.name;
+                        vm.email = response.email;
+                        vm.password = response.password;
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+        },
+        computed: {
+            submitTitle() {
+                return '更新';
+            },
+
+        },
+        methods: {
+            submitButton() {
+                var vm = this;
+                const payload = {
+                    UID : this.id,
+                    name : this.name,
+                    email : this.email,
+                    password : this.password,
+                }
+
+                $.ajax({
+                    url: '/setting/updateData',
+                    type: 'POST',
+                    data: JSON.stringify(payload),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+        }
+    });
+</script>
 
 </body>
 </html>

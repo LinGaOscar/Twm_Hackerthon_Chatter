@@ -9,7 +9,9 @@ public interface UserService {
 
     Map<String, Object> readUserWithEmail(String email);
 
+    Map<String, Object> readUserWithKey(String key);
+
     Map<String, Object> readAllUser();
 
-    Map<String, Object> updateUser(Map<String, Object> data);
+    Map<String, Object> updateUser(String key, Map<String, Object> data);
 }
