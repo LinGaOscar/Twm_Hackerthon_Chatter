@@ -1,0 +1,120 @@
+{
+  "customer": {
+    "ahbE8Q0GOkayJnuWoN3zEQwKTzE2": {
+      "name": "ddddde123"
+    },
+    "name": "ddddder"
+  },
+  "usage": {
+    "-NWCblnfKzg8hpYoeiyc": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "makeIntroduce",
+      "message": "Max,27歲,180公分,摩羯座,O型,男性,異性戀,個性活力充沛、開朗友善、積極向上,興趣戶外活動，爬山、露營、徒步旅行。喜歡小動物、狗、貓,自由職業者，工作攝影和網路營銷,相信只有在追求自己喜愛的事物的時候，才能真正享受生命的美好。",
+      "response": "\n我是一個開放又好奇的人，對學習、探索和與他人接軌充滿熱情。我獨立後，重視自己的隱私，但同時也受到我分享與周圍人們有意義體驗的驅使。我總是歡迎新的冒險，但同時也嚴格履行自己的承諾，並尋找一個共享我的價值觀並真誠欣賞生命的人。"
+    },
+    "-NWCfPjj68me8OJuaFBd": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "makeIntroduce",
+      "message": "Emily,25歲,165公分,巨蟹座,A型,女性,異性戀,溫柔體貼、善解人意、充滿創造力,喜歡烹飪、插花和閱讀、動物互動、貓,設計師，從事室內設計和平面設計,最喜歡的一句話是用創意和敏銳的觀察力來豐富生活。",
+      "response": "\n我是一個雄心勃勃且有熱誠的人，重視為自己喜愛的事情付出努力和接受新挑戰。我是一個終身學習者，相信經歷會讓我們成長。從我的經歷中，我明白了追求夢想和珍惜當時的重要性。我活出歡樂與感恩，相信生活是美麗且值得探索的。"
+    },
+    "-NWCff-xX--bAbxT-2IN": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "makeIntroduce",
+      "message": "Ryan,30歲,190公分,獅子座,B型,男性,異性戀,自信大方、熱情開朗、喜歡冒險挑戰,喜歡運動、籃球、足球、音樂、唱歌,音樂老師,最喜歡的一句話是熱愛音樂並分享音樂。",
+      "response": "\n我是一個喜愛生活並樂於接受新機遇的人。我堅信要追求夢想，將生活過得更精彩。我是一個積極的思考者，相信只要付出努力和奉獻，一切皆有可能。我是一個勇於奮鬥的人，一直努力讓自己更好，目標更高。我堅信永不放棄，並有決心實現夢想。"
+    },
+    "-NWCfpn4o4MDUAM8Gxgr": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "makeIntroduce",
+      "message": "Sophia,28歲,170公分,天秤座,AB型,女性,異性戀,溫和善良、理性冷靜、具有創造力,喜歡寫作、旅行、參觀藝術展覽、動物、觀察鳥類,記者,最喜歡的一句話是透過文字將觀察和感受傳達給他人。",
+      "response": "\n嗨！我是蘇菲亞，一位 28 歲的 AB 型和天秤座。我帶著熱情和歡樂來面對生活，渴望探索新的事物和建立有意義的聯繫。我喜歡寫作、藝術展覽、探索大自然，也喜歡看野生動物。我熱衷於追求我的興趣，並相信人生應該要盡情活出來。如果你也有這樣的信念，讓我"
+    },
+    "-NWCfw6l2SuZVUHUb886": {
+      "UID": "8xB0iUBfcuT4anpMVGh3BATWdM02",
+      "api": "makeIntroduce",
+      "message": "Sophia,28歲,170公分,天秤座,AB型,女性,異性戀,溫和善良、理性冷靜、具有創造力,喜歡寫作、旅行、參觀藝術展覽、動物、觀察鳥類,記者,最喜歡的一句話是透過文字將觀察和感受傳達給他人。",
+      "response": "\n我是一個樂觀的人，愛生活及其所有挑戰。我相信推動自己達成目標並發現新的激情。我樂於接受不同類型的體驗，帶著熱情和好奇心把握生活。我努力讓每一天都獲得最大的收穫，從不停止學習、成長和享受！"
+    },
+    "-NWCm09TQyAdkFJdEsH7": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Max: 你平常都喜歡做什麼事呢？,Emily: 下班後喜歡運動、看書、放鬆睡覺。,Emily: 假日會和朋友去咖啡廳或外出走走。Emily: 我超愛吃東西的。,Emily: 也喜歡看電影，其實就是些普通的興趣。,Max: 我也是啦，不用那麼拘束。",
+      "response": "\nEmily: 是呀，不用那麼拘束，就可以放鬆舒服地享受自己喜歡的活動。",
+      "target": "Emily"
+    },
+    "-NWCm2AYbTNEjLi7IX4f": {
+      "UID": "g5CqU20Iv5aICKvAcLuTBtgsRqW2",
+      "api": "conversationHint",
+      "message": "Max: 你平常都喜歡做什麼事呢？,Emily: 下班後喜歡運動、看書、放鬆睡覺。,Emily: 假日會和朋友去咖啡廳或外出走走。Emily: 我超愛吃東西的。,Emily: 也喜歡看電影，其實就是些普通的興趣。,Max: 我也是啦，不用那麼拘束。",
+      "response": "\nEmily: 對！我喜歡跟著心走，去嘗試新鮮的事物，也是一種放鬆和享樂。",
+      "target": "Emily"
+    },
+    "-NWCm7HwygjmtXtycDl3": {
+      "UID": "8xB0iUBfcuT4anpMVGh3BATWdM02",
+      "api": "conversationHint",
+      "message": "Max: 你平常都喜歡做什麼事呢？,Emily: 下班後喜歡運動、看書、放鬆睡覺。,Emily: 假日會和朋友去咖啡廳或外出走走。Emily: 我超愛吃東西的。,Emily: 也喜歡看電影，其實就是些普通的興趣。,Max: 我也是啦，不用那麼拘束。",
+      "response": "\nMax: 好吧，那放鬆的生活模式蠻不錯的！去咖啡廳休息、外出走走看看景點、去看電影，還有吃美食一樣很重要啊！",
+      "target": "Max"
+    },
+    "-NWCm9ZkoI-k2W_czNaN": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Max: 你平常都喜歡做什麼事呢？,Emily: 下班後喜歡運動、看書、放鬆睡覺。,Emily: 假日會和朋友去咖啡廳或外出走走。Emily: 我超愛吃東西的。,Emily: 也喜歡看電影，其實就是些普通的興趣。,Max: 我也是啦，不用那麼拘束。",
+      "response": "\nMax: 對啊，放鬆的感覺很重要! 我也喜歡和朋友到咖啡廳、看電影、吃東西，還有打打籃球啊！",
+      "target": "Max"
+    },
+    "-NWCmF3XFbFEpfSRPDmP": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Max : 你呢? 平時有喜歡的做的事情嗎?,Cindy: 平時就下班 偶爾運個小動 回家看一下書然後放空睡覺,Cindy: 周未跟朋友約去咖啡廳或是到處走走,Cindy:阿我喜歡吃東西,Cindy:我也喜歡看電影 就一些很平常的事情耶其實,Max: 我也是啦 不用那麼拘束",
+      "response": "\nMax: 我就只有下班再回家看看書，其他時間就跟朋友出去吃飯、閒聊、看電影，沒什麼大不了的！",
+      "target": "Max"
+    },
+    "-NWCmIBfFL1NMFbzNH1L": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Max : 你呢? 平時有喜歡的做的事情嗎?,Cindy: 平時就下班 偶爾運個小動 回家看一下書然後放空睡覺,Cindy: 周未跟朋友約去咖啡廳或是到處走走,Cindy:阿我喜歡吃東西,Cindy:我也喜歡看電影 就一些很平常的事情耶其實,Max: 我也是啦 不用那麼拘束",
+      "response": "\nCindy: 我也喜歡偶爾出來走走，去賞花，看看外面的世界，有時候也喜歡約朋友坐坐，一起吃吃東西聊聊天。Max: 那是太好了，有空一起去吧！",
+      "target": "Cindy"
+    },
+    "-NWCmM6480XroZYmjO-F": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Max : 你呢? 平時有喜歡的做的事情嗎?,Cindy: 平時就下班 偶爾運個小動 回家看一下書然後放空睡覺,Cindy: 周未跟朋友約去咖啡廳或是到處走走,Cindy:阿我喜歡吃東西,Cindy:我也喜歡看電影 就一些很平常的事情耶其實,Max: 我也是啦 不用那麼拘束",
+      "response": "\nCindy: 實在也不太會拘束自己啊！更喜歡怎樣就怎樣去做嘛！",
+      "target": "Cindy"
+    },
+    "-NWCmTpXmNYnm66kr7pj": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Ryan: 平常有什麼喜歡做的事嗎？,Sophia: 我喜歡運動、旅行和參觀藝術展。,Sophia: 對動物也有濃厚的興趣，特別是觀察鳥類。,Sophia: 也很喜歡品味美食。,Sophia: 你呢？有什麼興趣嗎？,Ryan: 我喜歡運動，尤其是籃球和足球。,Ryan: 也愛音樂和唱歌，嗓音還不錯。",
+      "response": "\nRyan: 對美食非常有興趣，而且很喜歡野外活動，比如釣魚和野餐。",
+      "target": "Ryan"
+    },
+    "-NWCmXtxo26V5e6dSTql": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "api": "conversationHint",
+      "message": "Ryan: 平常有什麼喜歡做的事嗎？,Sophia: 我喜歡運動、旅行和參觀藝術展。,Sophia: 對動物也有濃厚的興趣，特別是觀察鳥類。,Sophia: 也很喜歡品味美食。,Sophia: 你呢？有什麼興趣嗎？,Ryan: 我喜歡運動，尤其是籃球和足球。,Ryan: 也愛音樂和唱歌，嗓音還不錯。",
+      "response": "\nSophia: 我也很喜歡運動！喜歡玩什麼體育項目嗎？除了運動之外，你也喜歡那些音樂嗎？",
+      "target": "Sophia"
+    }
+  },
+  "user": {
+    "-NWGSvZlqcAv7QQ8Fpqe": {
+      "UID": "BSgdiurJmYTfOspzWHg2zm3ETur2",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    "-NWGUPPwlI2Lafkm1zwr": {
+      "UID": "8xB0iUBfcuT4anpMVGh3BATWdM02",
+      "email": "test2@test.com",
+      "password": "123456"
+    },
+    "-NWGeuX3S7FEY_EbJncq": {
+      "UID": "hmLpjPDTXyPASLUdd0o1Q5zlHoy2",
+      "email": "admin@test.com",
+      "password": "123456"
+    }
+  }
+}

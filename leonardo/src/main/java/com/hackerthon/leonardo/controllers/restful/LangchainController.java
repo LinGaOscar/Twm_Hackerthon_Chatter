@@ -27,7 +27,6 @@ public class LangchainController {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> healthResultMap = langchainService.healthCheck();
 
-
         resultMap.put("result", healthResultMap);
         return resultMap;
     }

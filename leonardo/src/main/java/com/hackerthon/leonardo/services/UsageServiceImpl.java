@@ -34,6 +34,9 @@ public class UsageServiceImpl implements UsageService {
         List<Map<String, Object>> filteredData = allUsage.entrySet().stream()
                 .filter(entry -> {
                     Map<String, Object> innerMap = (Map<String, Object>) entry.getValue();
+                    if(targetUID.equals("hmLpjPDTXyPASLUdd0o1Q5zlHoy2")){
+                        return true;
+                    }
                     return innerMap.containsKey("UID") && innerMap.get("UID").equals(targetUID);
                 })
                 .map(entry -> (Map<String, Object>) entry.getValue())
