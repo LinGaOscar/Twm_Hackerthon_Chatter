@@ -32,6 +32,16 @@
                     <p>目前總共呼叫API {{totalApiCall.times}}次</p>
                     <p>目前總共呼叫makeIntroduceTimes API {{totalApiCall.makeIntroduceTimes}}次</p>
                     <p>目前總共呼叫conversationHintTimesAPI {{totalApiCall.conversationHintTimes}}次</p>
+                    <p>目前總共呼叫personalGuideTimesAPI {{totalApiCall.personalGuideTimes}}次</p>
+                    <!-- 添加下拉选择菜单 -->
+                    <div style="margin-bottom: 10px;"></div>
+                    <select v-model="selectedCategory">
+                        <option value="">All</option>
+                        <option value="makeIntroduce">makeIntroduce</option>
+                        <option value="conversationHint">conversationHint</option>
+                        <option value="personalGuide">personalGuide</option>
+                    </select>
+                    <div style="margin-bottom: 10px;"></div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -42,7 +52,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="usage in totalUsage">
+                            <tr v-for="usage in filteredUsage">
                                 <td>{{usage.api}}</td>
                                 <td>{{usage.message}}</td>
                                 <td>{{usage.response}}</td>
@@ -60,7 +70,8 @@
         el: '#usage',
         data: {
             title: 'Chatter Buddy Usage',
-            totalUsage: {}
+            totalUsage: {},
+            selectedCategory: ""
         },
         mounted() {
             const self = this;
@@ -77,23 +88,34 @@
             });
         },
         computed: {
+            filteredUsage() {
+                if (this.selectedCategory === "") {
+                    return this.totalUsage;
+                } else {
+                    return this.totalUsage.filter(usage => usage.api === this.selectedCategory);
+                }
+            },
             totalApiCall() {
                 let times = this.totalUsage.length;
                 let makeIntroduceTimes = 0;
                 let conversationHintTimes = 0;
+                let personalGuideTimes = 0;
                 if (this.totalUsage.length > 0) {
                     this.totalUsage.forEach(item => {
                         if (item.api == "makeIntroduce") {
                             makeIntroduceTimes++;
-                        } else {
+                        } else if (item.api == "conversationHint") {
                             conversationHintTimes++;
+                        }else {
+                            personalGuideTimes++;
                         }
                     })
                 }
                 return {
                     times: times,
                     makeIntroduceTimes: makeIntroduceTimes,
-                    conversationHintTimes: conversationHintTimes
+                    conversationHintTimes: conversationHintTimes,
+                    personalGuideTimes : personalGuideTimes,
                 }
             }
         }
