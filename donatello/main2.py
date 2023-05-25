@@ -62,7 +62,6 @@ chinese_reply_chain = LLMChain(llm=llm, prompt=chinese_reply_prompt, verbose=Tru
 introduce_chain = SimpleSequentialChain(chains=[trams_chain, chain1, chain2, chinese_reply_chain], verbose=True)
 
 # conversation_hint
-
 conversation_hint_prompt = PromptTemplate(
     input_variables=["target", "value"],
     template=
@@ -74,6 +73,19 @@ conversation_hint_prompt = PromptTemplate(
     """,
 )
 conversation_hint_chain = LLMChain(llm=llm, prompt=conversation_hint_prompt, verbose=True, output_key="result")
+
+# personal_guide
+personal_guide_prompt = PromptTemplate(
+    input_variables=["target_a", "target_b", "value"],
+    template=
+    """
+    Simulate {target}'s response in the following conversation.
+    Add some details to enhance the conversation.
+    Keep the answers concise.
+    '''{value}'''
+    """,
+)
+personal_guide_chain = LLMChain(llm=llm, prompt=personal_guide_prompt, verbose=True, output_key="result")
 
 # fastapi
 
@@ -135,3 +147,13 @@ def make_introduce(obj: MyObject):
 "target":"max",
 "message":"Max : 你呢? 平時有喜歡的做的事情嗎?,Cindy: 平時就下班 偶爾運個小動 回家看一下書然後放空睡覺,Cindy: 周未跟朋友約去咖啡廳或是到處走走,Cindy:阿我喜歡吃東西,Cindy:我也喜歡看電影 就一些很平常的事情耶其實,Max: 我也是啦 不用那麼拘束"
 '''
+
+
+@app.post("/personal_guide")
+def personal_guide(obj: MyObject):
+    target_a = obj.data.get('target')
+    target_b = obj.data.get('target')
+    message = obj.data.get('message')
+
+    output = conversation_hint_chain.run(target_a=target_a, target_b=target_b, value=message)
+    return {"response": output}
