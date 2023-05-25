@@ -85,4 +85,21 @@ public class LangchainController {
          Ryan: 平常有什麼喜歡做的事嗎？,Sophia: 我喜歡運動、旅行和參觀藝術展。,Sophia: 對動物也有濃厚的興趣，特別是觀察鳥類。,Sophia: 也很喜歡品味美食。,Sophia: 你呢？有什麼興趣嗎？,Ryan: 我喜歡運動，尤其是籃球和足球。,Ryan: 也愛音樂和唱歌，嗓音還不錯。
          */
     }
+
+    @PostMapping("/personalGuide")
+    public Map<String, Object> personalGuide(@RequestBody Map<String, Object> data) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String UID = (String) data.get("UID");
+        if (UID == null || UID.isEmpty()) {
+            resultMap.put("err", "lost UID");
+            return resultMap;
+        }
+        String apiName = "personalGuide";
+        Map<String, Object> guideMap = langchainService.makeIntroduce(data);
+        data.put("response", guideMap.get("response"));
+        usageService.addUsage(apiName, data);
+
+        resultMap.put("result", guideMap);
+        return resultMap;
+    }
 }
