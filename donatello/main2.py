@@ -89,7 +89,7 @@ Offer one key point and two suggestions to {target_a}.
 Key point should start with "you should".
 Answer the question using the specified format, you can follow the example below:
 '''
-1:[key point] 2:[Answer to suggestions1] 3:[Answer to suggestions2]
+1:[Answer to key point] 2:[Answer to suggestions1] 3:[Answer to suggestions2]
 '''
 """,
 )
