@@ -2,7 +2,8 @@ import whisper
 from gtts import gTTS
 import os
 
-
+#install ffmpeg and set env.path
+#https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/
 model = whisper.load_model("base")
 result = model.transcribe("10buildings.mp3")
 print(result["text"])
