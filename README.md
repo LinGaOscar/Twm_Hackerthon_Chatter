@@ -33,5 +33,11 @@ pip install --upgrade wheel
 
 pip install --upgrade setuptools
 
+pip install -U openai-whisper
+
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+
+pip install setuptools-rust
+
 # leonardo
 java11 springboot 
