@@ -1,0 +1,10 @@
+from dotenv import load_dotenv
+from langchain.document_loaders import DirectoryLoader,TextLoader
+from langchain.embeddings import OpenAIEmbeddings
+
+load_dotenv()
+embedding=OpenAIEmbeddings();
+text = "你好!我是Oscar"
+doc_embedding = embedding.embed_documents([text])
+
+print(doc_embedding)
