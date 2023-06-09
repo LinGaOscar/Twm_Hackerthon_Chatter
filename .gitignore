@@ -7,3 +7,5 @@ donatello/__pycache__/main2.cpython-311.pyc
 .idea/Twm_Hackerthon_Chatter.iml
 .idea/vcs.xml
 .idea/workspace.xml
+donatello/.env
+donatello/quick_start/.env
