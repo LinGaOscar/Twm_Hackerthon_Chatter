@@ -9,3 +9,4 @@ donatello/__pycache__/main2.cpython-311.pyc
 .idea/workspace.xml
 donatello/.env
 donatello/quick_start/.env
+donatello/quick_start/.chroma
